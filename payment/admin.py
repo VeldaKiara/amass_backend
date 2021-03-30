@@ -1,5 +1,5 @@
 from django.contrib import admin
-from events.models import *
+from payment.models import *
 # Register your models here.
 
 

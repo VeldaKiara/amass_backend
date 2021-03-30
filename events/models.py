@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from payment.models import Payment
+
 
 # Create your models here.
 
@@ -10,8 +10,7 @@ class Events(models.Model):
     location = models.CharField(max_length=300, blank=False)
     description = models.TextField(max_length=450, blank=False)
     user = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
-    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, default=0)
-    
+    is_paid = models.BooleanField(default=False, blank=False)    
     class Meta:
         pass
     
