@@ -10,7 +10,8 @@ class Events(models.Model):
     location = models.CharField(max_length=300, blank=False)
     description = models.TextField(max_length=450, blank=False)
     user = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
-    is_paid = models.BooleanField(default=False, blank=False)    
+    is_paid = models.BooleanField(default=False, blank=False)  
+    cost = models.FloatField(default=0)  
     class Meta:
         pass
     

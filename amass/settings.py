@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'payment',
     'tickets',
     'rest_framework',
-    
+    'rest_framework.authtoken',
+    'tinypesa',
+
 ]
 
 MIDDLEWARE = [
