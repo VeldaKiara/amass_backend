@@ -1,0 +1,14 @@
+asgiref==3.3.1
+certifi==2020.12.5
+chardet==4.0.0
+Django==3.1.7
+djangorestframework==3.12.4
+djangorestframework-simplejwt==4.6.0
+idna==2.10
+Pygments==2.8.1
+PyJWT==2.0.1
+pytz==2021.1
+requests==2.25.1
+router==0.1
+sqlparse==0.4.1
+urllib3==1.26.4
