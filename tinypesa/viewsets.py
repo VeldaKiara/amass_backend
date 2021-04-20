@@ -35,14 +35,15 @@ class TinypesaViewSets(viewsets.ViewSet):
      
      @action(detail=False, methods=['post'])
      def webhook(self, request):
-         print(request.data['Body']['stkCallback']['ResultCode'])
-         print(request.data['Body']['stkCallback']['TinyPesaID'])
          v = Payment.objects.filter(ref_number=request.data['Body']['stkCallback']['TinyPesaID']).first()
          if v:
              if request.data['Body']['stkCallback']['ResultCode'] == 0 :
                  v.status = 1
                  v.save()
-                 Tickets.objects.create(event=v.event, payment=v, user=CustomUser.objects.first()) 
+                 current_event = Events.objects.get(pk=v.event.id)
+                 n = int(float(request.data['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'])/ current_event.cost)
+                 for i in range(0,n):
+                    Tickets.objects.create(event=v.event, payment=v, user=CustomUser.objects.first()) 
              
          
          return Response({'velda': 'engineer'})
@@ -50,4 +51,3 @@ class TinypesaViewSets(viewsets.ViewSet):
      
          
         
-    
