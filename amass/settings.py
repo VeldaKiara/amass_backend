@@ -145,7 +145,18 @@ SIMPLE_JWT = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'iwillbetestingapps@gmail.com'
-EMAIL_HOST_PASSWORD = 'dwaylwlbcmikwmjv' 
+EMAIL_HOST_PASSWORD = 'Tp28Nfs7h2dy96tX' 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'default from email'
+DEFAULT_FROM_EMAIL = 'iwillbetestingapps@gmail.com'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Nairobi'
