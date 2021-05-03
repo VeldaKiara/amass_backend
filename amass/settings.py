@@ -26,7 +26,7 @@ SECRET_KEY = '^-@dykue3(nfcazj9#fxszz@r!9&_a#chf-a)8=qdsmz_21+^e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'tinypesa',
+    'corsheaders',
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -160,3 +162,10 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Nairobi'
+
+
+# CORS_ALLOWED_ORIGINS=[
+#     "http://127.0.0.1:3000",
+#     "http://localhost:3000"
+# ]
+CORS_ALLOW_ALL_ORIGINS=True

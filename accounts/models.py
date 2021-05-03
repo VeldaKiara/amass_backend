@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     email =  models.EmailField('email address', max_length=254, blank=False, unique = True)
     event = models.ForeignKey(Events, on_delete=models.CASCADE, null=True)
     
+    
     class Meta:
         pass
     def __str__(self):
