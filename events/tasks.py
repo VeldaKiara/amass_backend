@@ -9,8 +9,8 @@ from events.models import Events
 logger = get_task_logger(__name__)
 
 @task(name="send_email_background")
-def send_mail_background(subject, message, email_from, recipient_list):
-    w=Events.objects.first()
+def send_mail_background(subject, message, email_from, recipient_list,event_id):
+    w=Events.objects.get(pk=event_id)
     html_message = render_to_string('mail_template.html', {'context': 'values', 
                                                            'eve' : w,
                                                            'dt':w.event_time.strftime("%Y%m%dT%H%M00z")

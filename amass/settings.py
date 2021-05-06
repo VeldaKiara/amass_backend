@@ -170,4 +170,5 @@ CELERY_TIMEZONE = 'Africa/Nairobi'
 #     "http://localhost:3000"
 # ]
 CORS_ALLOW_ALL_ORIGINS=True
+STATIC_ROOT = "http://54.175.235.38"
 
