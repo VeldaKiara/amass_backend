@@ -54,14 +54,15 @@ class TinypesaViewSets(viewsets.ViewSet):
      
      @action(detail=False, methods=['post'])
      def webhook(self, request):
-         v = Payment.objects.filter(request.data['Body.stkCallback.TinyPesaID']).first()
-
+         
+         v = Payment.objects.filter(ref_number = request.data['Body']['stkCallback']['TinyPesaID']).first()
+         print(v)
          subject = 'Thank you for registering to our site'
          message = ' it  means a world to us '
          email_from = settings.EMAIL_HOST_USER
          recipient_list = ['shecodeafricanairobi@gmail.com',]
          
-         send_mail_background.delay( subject, message, email_from, recipient_list,v.event.id )
+         send_mail_background.delay( subject, message, email_from, recipient_list,v.event_id )
                 
         
          if v:
@@ -75,9 +76,9 @@ class TinypesaViewSets(viewsets.ViewSet):
                     Tickets.objects.create(event=v.event, payment=v, user=CustomUser.objects.first()) 
                         
                     
-                   
-         return Response({'velda':request.data["Body"].json()})
-     
+                
+         return Response({'velda':request.data['Body']})
+        #  return Response({'velda':"makiria"})
      
          
          
