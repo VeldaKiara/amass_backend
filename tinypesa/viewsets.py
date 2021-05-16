@@ -15,12 +15,8 @@ import ast
 class TinypesaViewSets(viewsets.ViewSet):
      @action(detail=False, methods=['post'])
      def start (self, request):
-         event_id=request.data.get('events')
-         event=Events.objects.get(pk=event_id)
-         ticker_number=request.data.get('number')
          
-         total_amnt=float(event.cost) * float(ticker_number)
-                 
+           
                  
         #  subject = 'Thank you for registering to our site'
         #  message = ' it  means a world to us '
@@ -32,7 +28,16 @@ class TinypesaViewSets(viewsets.ViewSet):
          s = TinypesaSerializer(data = request.data)
         
          if not s.is_valid():
+            
              return Response(s.errors)
+        
+         event_id=request.data.get('events')
+         event=Events.objects.get(pk=event_id)
+         t=request.data.get('ticket_number')
+         print(t)
+         total_amnt= float(event.cost) * float(t)
+        
+         
          url = 'https://tinypesa.com/api/v1/express/initialize'
          body = {
              'msisdn': s.data.get('phone_number'),
@@ -46,7 +51,7 @@ class TinypesaViewSets(viewsets.ViewSet):
          r = requests.post(url,data=body, headers=headers)
          data = json.loads(r.text)
          e= Events.objects.get(pk=s.data.get('events'))
-         Payment.objects.create(event=e , ref_number = data['request_id'] )
+         Payment.objects.create(event=e , ref_number = data['request_id'], user_id=request.user )
            
             
 
@@ -56,14 +61,8 @@ class TinypesaViewSets(viewsets.ViewSet):
      def webhook(self, request):
          
          v = Payment.objects.filter(ref_number = request.data['Body']['stkCallback']['TinyPesaID']).first()
-         print(v)
-         subject = 'Thank you for registering to our site'
-         message = ' it  means a world to us '
-         email_from = settings.EMAIL_HOST_USER
-         recipient_list = ['shecodeafricanairobi@gmail.com',]
+         u = CustomUser.objects.get(id = v.user_id.id)
          
-         send_mail_background.delay( subject, message, email_from, recipient_list,v.event_id )
-                
         
          if v:
              if request.data['Body']['stkCallback']['ResultCode'] == 0 :
@@ -74,7 +73,13 @@ class TinypesaViewSets(viewsets.ViewSet):
                  n = int(float(request.data['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'])/ current_event.cost)
                  for i in range(0,n):
                     Tickets.objects.create(event=v.event, payment=v, user=CustomUser.objects.first()) 
-                        
+                    subject = 'Thank you for registering to our site'
+                    message = ' it  means the world to us '
+                    email_from = settings.EMAIL_HOST_USER
+                    recipient_list = [u.email]
+         
+                    send_mail_background.delay( subject, message, email_from, recipient_list, v.event_id )
+                    
                     
                 
          return Response({'velda':request.data['Body']})
