@@ -53,7 +53,7 @@ class TinypesaViewSets(viewsets.ViewSet):
          e= Events.objects.get(pk=s.data.get('events'))
         #  auser = request.user.id
         #  print(auser)
-         Payment.objects.create(event=e , ref_number = data['request_id'], user_id=request.user.id)
+         Payment.objects.create(event=e , ref_number = data['request_id'], user_id=request.user)
            
             
 

@@ -11,3 +11,7 @@ class CustomUserViewsSets(viewsets.ModelViewSet):
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
+    
+# class MMyObtainTokenPairView(TokenObtainPairView):
+#     permission_classes = (AllowAny,)
+#     serializer_class = MMyTokenObtainPairSerializer
