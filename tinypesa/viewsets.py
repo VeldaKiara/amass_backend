@@ -51,7 +51,9 @@ class TinypesaViewSets(viewsets.ViewSet):
          r = requests.post(url,data=body, headers=headers)
          data = json.loads(r.text)
          e= Events.objects.get(pk=s.data.get('events'))
-         Payment.objects.create(event=e , ref_number = data['request_id'], user_id=request.user )
+        #  auser = request.user.id
+        #  print(auser)
+         Payment.objects.create(event=e , ref_number = data['request_id'], user_id=request.user.id)
            
             
 
